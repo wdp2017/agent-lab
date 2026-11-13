@@ -4,13 +4,13 @@
 
 > 状态：第 0 周（2026-11-13 开营）
 
-## 定位（待补充）
+## 定位
 
-- 目标岗位：
-- 我的差异化：
-- 13 周后用什么证明：
+- 目标岗位：主投 AI 应用开发 / Agent 开发；保底可投 AI 交互前端与 AI 教育产品研发。
+- 我的差异化：教育场景里把大模型流式输出稳定渲染上屏的前端经验，正在补齐可评测的 Agent 应用工程。
+- 13 周后拿什么证明：本仓库可运行的作品 A/B/C，以及 labs 里亲手跑通的笔记；指标一律实测后填写。
 
-详细版见 [notes/positioning.md](notes/positioning.md)。
+详细版见 [notes/positioning.md](notes/positioning.md)，路线取舍见 [notes/roadmap-cut.md](notes/roadmap-cut.md)。
 
 ## 目录
 
