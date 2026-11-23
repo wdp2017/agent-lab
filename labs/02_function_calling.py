@@ -78,8 +78,17 @@ for tool_call in message.tool_calls:
         raise ValueError("未知工具：" + tool_call.function.name)
 
     args = json.loads(tool_call.function.arguments)
-    result = get_weather(city=args["city"])
-    print("本地函数结果：", result)
+    result = None
+    for attempt in range(2):
+        try:
+            
+            city = json.loads(tool_call.function.arguments)["city"]
+            result = get_weather(city)
+            print("本地函数结果：", result)
+            break
+        except Exception as exc:
+            result = {"error": str(exc)}
+            print(f"第 {attempt + 1} 次失败：", exc)
 
     messages.append({
         "role": "tool",
@@ -115,7 +124,10 @@ except json.JSONDecodeError as exc:
 except ValidationError as exc:
     print("字段校验失败：", exc.message)
 else:
-    if data["temperature"] != result["temperature"]:
-        print("一致性校验失败：模型温度与工具结果不符")
+    if "error" in result:
+        print("工具已失败，跳过一致性检查：", result["error"])
+    elif data["temperature"] != result["temperature"]:
+        print("一致性检查失败：温度与工具结果不一致")
     else:
-        print("结构和温度一致性校验通过：", data)
+        print("校验通过：", data)
+        

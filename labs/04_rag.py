@@ -5,7 +5,7 @@ cards_path = Path(__file__).resolve().parent / "board_cards.json"
 cards = json.loads(cards_path.read_text(encoding="utf-8"))
 print("卡片数量：", len(cards))
 
-question = "Function Calling 的工作流程是什么？"
+question = "Rag 的工作流程是什么？"
 keywords = ["流程", "工作"]
 hits = []
 for card in cards:
