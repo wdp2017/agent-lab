@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Function Calling 简介",
+    "content": "Function Calling 是让大模型在对话中识别何时需要调用外部函数，并输出结构化参数（如 JSON）的机制。模型本身不执行函数，只生成调用意图与参数，由应用层解析后执行并把结果回传，模型再基于结果继续回答。",
+    "type": "text",
+    "continue": true
+  },
+  {
+    "title": "Function Calling 的调用流程",
+    "content": "典型流程：1) 应用向模型提供函数定义（名称、描述、参数 schema）；2) 模型判断需要调用时返回函数名与参数；3) 应用执行函数并得到结果；4) 将结果作为消息回传模型；5) 模型整合结果生成最终回复。可多轮循环调用多个函数。",
+    "type": "text",
+    "continue": true
+  },
+  {
+    "title": "Function Calling 的要点与限制",
+    "content": "描述与参数 schema 越清晰，模型调用越准确；调用由模型自主判断，可能不调用或调用错误，应用需校验参数并处理异常。模型不直接访问外部系统，安全边界由应用控制。不同模型对函数调用的支持与格式（如 tools、function 字段）存在差异，需按对应模型文档实现。",
+    "type": "text",
+    "continue": false
+  }
+]
