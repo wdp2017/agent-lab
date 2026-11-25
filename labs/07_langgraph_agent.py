@@ -3,7 +3,9 @@ from jsonschema import validate, ValidationError
 from pathlib import Path
 from dotenv import load_dotenv
 from openai import OpenAI
-from typing import TypedDict
+
+import operator
+from typing import Annotated, TypedDict
 from langgraph.graph import StateGraph, START, END
 
 load_dotenv(Path(__file__).resolve().parents[1] / ".env")
@@ -92,7 +94,7 @@ messages = [
 ]
 
 class AgentState(TypedDict):
-    messages: list[dict]
+    messages: Annotated[list[dict], operator.add]
     model_calls: int
 
 
@@ -123,7 +125,7 @@ def call_model(state: AgentState) -> dict:
         ]
 
     return {
-        "messages": state["messages"] + [assistant_dict],
+        "messages": [assistant_dict],
         "model_calls": state["model_calls"] + 1,
     }
 
@@ -156,7 +158,7 @@ def run_tools(state: AgentState) -> dict:
             "content": json.dumps(result, ensure_ascii=False),
         })
 
-    return {"messages": state["messages"] + tool_messages}
+    return {"messages": tool_messages}
 
 MAX_MODEL_CALLS = 5
 
@@ -200,6 +202,7 @@ final_state = app.invoke(
     {"messages": messages, "model_calls": 0},
     config={"recursion_limit": 20},
 )
+print("消息条数：", len(final_state["messages"]))
 print("累计模型请求次数：", final_state["model_calls"])
 last = final_state["messages"][-1]
 if last.get("role") == "assistant" and not last.get("tool_calls"):
